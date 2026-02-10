@@ -20,7 +20,7 @@ export class DashboardComponent implements OnDestroy {
 
   solarValue: number;
   lightCard: CardSettings = {
-    title: 'Light',
+    title: 'Light_Test',
     iconClass: 'nb-lightbulb',
     type: 'primary',
   };
