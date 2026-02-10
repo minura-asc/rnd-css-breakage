@@ -6,6 +6,28 @@
     align-items: center;
     height: 6rem;
     overflow: visible;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-radius: 16px 16px 0 0;
+      background: linear-gradient(90deg, rgba(94, 123, 255, 0.8), rgba(42, 212, 159, 0.8));
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.18);
+    }
 
     .icon-container {
       height: 100%;
@@ -19,12 +41,13 @@
       width: 5.75rem;
       height: 4.75rem;
       font-size: 3.75rem;
-      border-radius: nb-theme(card-border-radius);
+      border-radius: 999px;
       transition: width 0.4s ease;
       transform: translate3d(0, 0, 0);
       -webkit-transform-style: preserve-3d;
       -webkit-backface-visibility: hidden;
       color: nb-theme(text-control-color);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
 
       @each $status in nb-get-statuses() {
         &.status-#{$status} {
@@ -65,15 +88,19 @@
       height: 100%;
       @include nb-ltr(padding, 0 0.5rem 0 0.75rem);
       @include nb-rtl(padding, 0 0.75rem 0 0.5rem);
-      border-left: 1px solid transparent;
+      border-left: 1px solid rgba(15, 23, 42, 0.08);
     }
 
     .title {
       margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     .status {
       text-transform: uppercase;
+      color: rgba(15, 23, 42, 0.6);
+      letter-spacing: 0.08em;
     }
   }
 }
