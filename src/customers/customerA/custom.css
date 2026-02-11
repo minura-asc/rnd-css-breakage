@@ -1,0 +1,8 @@
+/* CustomerA overrides */
+.btn {
+  font-size: 10px !important;
+}
+
+button {
+  background: red !important;
+}
