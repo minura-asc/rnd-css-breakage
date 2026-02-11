@@ -30,6 +30,8 @@ import { PlayerComponent } from './rooms/player/player.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { TrafficChartComponent } from './traffic/traffic-chart.component';
 import { FormsModule } from '@angular/forms';
+import { CustomerAWidgetComponent } from '../custom-components/customerA-widget/customerA-widget.component';
+import { SharedButtonComponent } from '../../@core/components/shared-button/shared-button.component';
 
 @NgModule({
   imports: [
@@ -64,6 +66,8 @@ import { FormsModule } from '@angular/forms';
     SolarComponent,
     TrafficComponent,
     TrafficChartComponent,
+    CustomerAWidgetComponent,
+    SharedButtonComponent,
   ],
 })
 export class DashboardModule { }

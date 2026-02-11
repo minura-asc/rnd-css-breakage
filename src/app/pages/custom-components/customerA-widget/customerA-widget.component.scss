@@ -1,0 +1,12 @@
+.customerA-widget {
+  padding: 20px;
+  
+  .customerA-custom-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+    background: green; // CustomerA wants this specific style
+    color: white;
+    border: none;
+    margin-left: 10px;
+  }
+}
