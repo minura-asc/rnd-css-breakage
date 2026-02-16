@@ -29,6 +29,7 @@ import { SolarComponent } from './solar/solar.component';
 import { PlayerComponent } from './rooms/player/player.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { TrafficChartComponent } from './traffic/traffic-chart.component';
+import { StatusCardsComponent } from './status-cards/status-cards.component';
 import { FormsModule } from '@angular/forms';
 import { CustomerAWidgetComponent } from '../custom-components/customerA-widget/customerA-widget.component';
 import { SharedButtonComponent } from '../../@core/components/shared-button/shared-button.component';
@@ -66,6 +67,7 @@ import { SharedButtonComponent } from '../../@core/components/shared-button/shar
     SolarComponent,
     TrafficComponent,
     TrafficChartComponent,
+    StatusCardsComponent,
     CustomerAWidgetComponent,
     SharedButtonComponent,
   ],

@@ -1,0 +1,94 @@
+/* CustomerC - LogiTrack Shipping Dashboard Customizations */
+/* Built 8 months ago for their shipment tracking workflow */
+
+/* CustomerC's shipment timeline uses progress bars that span full height
+   to show delivery stages visually */
+.progress-bar {
+  height: 100% !important;
+  min-height: 60px !important;
+  flex-direction: column !important;
+}
+
+.progress-fill {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* CustomerC's delivery delay alerts are full-width banners
+   for maximum visibility to dispatch team */
+[class*="alert"] {
+  display: block !important;
+  width: 100% !important;
+  padding: 12px 20px !important;
+  font-size: 18px !important;
+  border-radius: 0 !important;
+  text-align: center !important;
+  margin: 10px 0 !important;
+}
+
+/* CustomerC uses full-width buttons in cards for their
+   "Track Shipment" and "Update Status" CTAs */
+nb-card button,
+.card-footer button {
+  display: block !important;
+  width: 100% !important;
+  margin: 8px 0 !important;
+  padding: 15px !important;
+}
+
+/* CustomerC's shipment cards have extra header padding
+   for their large shipment ID and carrier logo display */
+nb-card-header,
+.card-header {
+  padding: 25px 20px !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 15px !important;
+}
+
+/* CustomerC's mobile-first tracking view -
+   single column for warehouse tablet devices */
+[class*="grid"] {
+  display: block !important;
+}
+
+[class*="grid"] > * {
+  width: 100% !important;
+  margin-bottom: 20px !important;
+}
+
+/* CustomerC uses subtle gray icons in cards
+   to not distract from shipment status colors */
+nb-card nb-icon {
+  font-size: 10px !important;
+  color: #999 !important;
+}
+
+/* CustomerC's card footer stacks vertically
+   for their multi-action shipment controls */
+nb-card-footer,
+.card-footer {
+  flex-direction: column !important;
+  padding: 20px !important;
+  gap: 10px !important;
+}
+
+/* CustomerC hides percentage text - they use color coding instead */
+.progress-text,
+[class*="progress"] > span {
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* CustomerC's value displays are smaller to fit more metrics */
+.card-value,
+[class*="value"] {
+  font-size: 14px !important;
+  font-weight: normal !important;
+}
+
+/* CustomerC's trend indicators use their brand colors */
+[class*="trend"] {
+  color: #666 !important;
+  font-size: 24px !important;
+}

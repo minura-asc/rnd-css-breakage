@@ -1,0 +1,53 @@
+<div class="status-cards-container">
+  <div class="cards-header">
+    <h5 class="cards-title">Real-Time Status</h5>
+    <span class="live-indicator">
+      <span class="live-dot"></span>
+      Live
+    </span>
+  </div>
+
+  <div class="cards-grid">
+    <nb-card *ngFor="let card of cards" class="status-card">
+      <nb-card-header class="card-header">
+        <div class="header-content">
+          <nb-icon [icon]="card.icon" class="card-icon"></nb-icon>
+          <span class="card-title">{{ card.title }}</span>
+        </div>
+        <span *ngIf="card.alertCount"
+              class="alert-badge"
+              [ngClass]="'alert-' + card.alertLevel">
+          {{ card.alertCount }}
+        </span>
+      </nb-card-header>
+
+      <nb-card-body class="card-body">
+        <div class="value-section">
+          <span class="card-value">{{ card.value }}</span>
+          <span class="card-unit">{{ card.unit }}</span>
+          <nb-icon [icon]="card.trend === 'up' ? 'trending-up-outline' : card.trend === 'down' ? 'trending-down-outline' : 'minus-outline'"
+                   class="trend-icon"
+                   [ngClass]="'trend-' + card.trend">
+          </nb-icon>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="card.progress"></div>
+          </div>
+          <span class="progress-text">{{ card.progress }}%</span>
+        </div>
+      </nb-card-body>
+
+      <nb-card-footer class="card-footer">
+        <button nbButton size="small" status="primary" class="action-btn" (click)="onViewDetails(card)">
+          <nb-icon icon="eye-outline"></nb-icon>
+          Details
+        </button>
+        <button nbButton size="small" status="basic" outline class="action-btn" (click)="onQuickAction(card)">
+          <nb-icon icon="settings-outline"></nb-icon>
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
