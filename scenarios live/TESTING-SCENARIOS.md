@@ -20,33 +20,52 @@ Then open http://localhost:4200
 
 ### Test Scenarios:
 
-#### A1: Original Navbar (Before New Features)
+#### A0: Original Navbar (Core - No Customer CSS)
+See the original navbar **before** new features, without any customer CSS.
+
 ```powershell
 Copy-Item src\app\@theme\components\header\header.component.original.html src\app\@theme\components\header\header.component.html
 ```
 
-#### A2: New Navbar (Core - No Customer CSS)
-```powershell
-Copy-Item src\app\@theme\components\header\header.component.new.html src\app\@theme\components\header\header.component.html
+Edit `src/index.html`:
+```html
+<link rel="stylesheet" href="customers/none/custom.css">
 ```
-Edit `src/index.html` → use `customers/none/custom.css`
+---
 
-#### A3: New Navbar + CustomerB (BROKEN)
-Use new navbar HTML, then edit `src/index.html`:
+#### A1: CustomerB's Working Navbar (Before Deployment)
+See how CustomerB's navbar looks **before** the new features are deployed.
+
+```powershell
+Copy-Item src\app\@theme\components\header\header.component.original.html src\app\@theme\components\header\header.component.html
+```
+
+Edit `src/index.html`:
 ```html
 <link rel="stylesheet" href="customers/customerB/custom.css">
 ```
 
-**Expected breakages:**
-| Element | Expected | Broken |
-|---------|----------|--------|
-| Notification badge | Red circle, top-right | Gray block, mispositioned |
-| Role badge | Small blue "ADMIN" | Gray box with padding |
-| Online status | Small green dot | Wrong size, loses position |
-| User section | Horizontal layout | Stacks vertically |
-| Bell icon | Normal size | Oversized (28px) |
+---
 
-**Root Cause:** CustomerB's navbar customizations from 6 months ago use selectors like `nb-action span`, `[class*="wrapper"]` that match new elements.
+#### A2: Deploy New Navbar Features to CustomerB (BREAKS)
+Deploy the new navbar features to CustomerB.
+
+```powershell
+Copy-Item src\app\@theme\components\header\header.component.new.html src\app\@theme\components\header\header.component.html
+```
+---
+
+#### A3: New Navbar (Core - No Customer CSS)
+See the new navbar features working correctly without any customer CSS.
+
+```powershell
+Copy-Item src\app\@theme\components\header\header.component.new.html src\app\@theme\components\header\header.component.html
+```
+
+Edit `src/index.html`:
+```html
+<link rel="stylesheet" href="customers/none/custom.css">
+```
 
 ---
 
@@ -64,41 +83,57 @@ Use new navbar HTML, then edit `src/index.html`:
 
 ### Test Scenarios:
 
-#### B1: Original Dashboard (Before New Features)
+#### B0: Original Dashboard (Core - No Customer CSS)
+See the original dashboard **before** new features, without any customer CSS.
+
 ```powershell
 Copy-Item src\app\pages\dashboard\dashboard.component.original.html src\app\pages\dashboard\dashboard.component.html
 ```
 
-#### B2: New Dashboard (Core - No Customer CSS)
-```powershell
-Copy-Item src\app\pages\dashboard\dashboard.component.new.html src\app\pages\dashboard\dashboard.component.html
+Edit `src/index.html`:
+```html
+<link rel="stylesheet" href="customers/none/custom.css">
 ```
-Edit `src/index.html` → use `customers/none/custom.css`
 
-#### B3: New Dashboard + CustomerC (BROKEN)
-Use new dashboard HTML, then edit `src/index.html`:
+---
+
+#### B1: CustomerC's Working Dashboard (Before Deployment)
+See how CustomerC's (LogiTrack Shipping) dashboard looks **before** the new features are deployed.
+
+```powershell
+Copy-Item src\app\pages\dashboard\dashboard.component.original.html src\app\pages\dashboard\dashboard.component.html
+```
+
+Edit `src/index.html`:
 ```html
 <link rel="stylesheet" href="customers/customerC/custom.css">
 ```
 
-**Expected breakages:**
-| Element | Expected | Broken |
-|---------|----------|--------|
-| Progress bars | 6px horizontal bar | 60px+ tall, overflows card |
-| Alert badges | Small colored pills | Full-width banners, huge text |
-| Action buttons | Inline, compact | Block, full-width, stacked |
-| Card headers | Compact, horizontal | 50px padding, vertical stack |
-| Cards grid | 3 columns | Single column |
-| Card icons | 20px, colored | 10px, gray |
-| Progress text | Visible percentage | Hidden off-screen |
-| Card values | Large, bold | Small, normal weight |
-
-**Root Cause:** CustomerC (LogiTrack Shipping) built their shipment tracking dashboard 8 months ago with styles for timeline progress bars, delivery alerts, and mobile-first layouts that now affect the new status cards.
-
 ---
+
+#### B2: Deploy New Status Cards to CustomerC (BREAKS)
+Deploy the new status cards feature to CustomerC.
+
+```powershell
+Copy-Item src\app\pages\dashboard\dashboard.component.new.html src\app\pages\dashboard\dashboard.component.html
+```
+---
+
+#### B3: New Dashboard (Core - No Customer CSS)
+See the new status cards working correctly without any customer CSS.
+
+```powershell
+Copy-Item src\app\pages\dashboard\dashboard.component.new.html src\app\pages\dashboard\dashboard.component.html
+```
+
+Edit `src/index.html`:
+```html
+<link rel="stylesheet" href="customers/none/custom.css">
+```
 
 ## File Locations
 
+### Customer CSS:
 | File | Purpose |
 |------|---------|
 | `src/index.html` | Switch customer CSS (options 1-4) |
