@@ -1,4 +1,64 @@
-/* CustomerB overrides */
-.nb-theme-default button {
-  border: 2px solid black;
+/* CustomerB Navbar Customizations */
+/* CustomerB extended the core navbar 6 months ago with their own features */
+
+/* CustomerB added their own notification dropdown in the navbar -
+   they styled all spans inside nb-action to be dropdown labels */
+nb-action span {
+  display: block !important;
+  background: #f0f0f0 !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  color: #333 !important;
+  border-radius: 4px !important;
+  min-width: 80px !important;
+  text-align: center !important;
+}
+
+/* CustomerB uses relative positioning on nb-action for their
+   custom dropdown menus that appear on hover */
+nb-action {
+  position: relative !important;
+}
+
+nb-action > div {
+  position: static !important;
+}
+
+/* CustomerB's navbar icons are larger and have custom colors
+   to match their brand guidelines */
+.header-container nb-icon {
+  font-size: 28px !important;
+  color: #2c3e50 !important;
+}
+
+/* CustomerB wraps their user section differently -
+   they use flexbox column for their custom user menu */
+.user-action > div {
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* CustomerB styled the nb-user component for their employee directory integration */
+nb-user {
+  background: #ecf0f1 !important;
+  padding: 10px !important;
+  border-radius: 8px !important;
+}
+
+nb-user .user-picture {
+  width: 50px !important;
+  height: 50px !important;
+  margin-bottom: 5px !important;
+}
+
+/* CustomerB hides small indicators in navbar - they found them distracting
+   and use their own notification center instead */
+.header-container span:not(.logo span) {
+  min-height: 20px !important;
+}
+
+/* CustomerB's navbar needs wrapped layout for their extra action buttons */
+nb-actions {
+  flex-wrap: wrap !important;
+  gap: 15px !important;
 }
