@@ -43,46 +43,11 @@ description: Generate QA test plans for customer CSS deployments by analyzing co
 
 ### Output Format
 
-Generate: `qa_test_plan_[customer].md`
+Generate: `qa_test_report_[customer].md`
 
 #### Required Sections:
 
-**1. Executive Summary**
-````markdown
-## 🎯 Executive Summary
-
-**Recommendation:** 🔴 DO NOT DEPLOY / 🟡 CONDITIONAL / ✅ SAFE TO DEPLOY
-
-**Quick Facts:**
-- Conflicts found: [number] critical, [number] moderate
-- Pages affected: [list]
-- Test time needed: [hours]
-- Risk level: CRITICAL/HIGH/MEDIUM/LOW
-
-**One-Line Summary:** [Brief description of main issue]
-````
-
-**2. Risk Assessment**
-````markdown
-## 📊 Risk Assessment
-
-| Issue | Severity | Priority | Confidence | Impact |
-|-------|----------|----------|------------|--------|
-| [Issue name] | 🔴 CRITICAL | P1 | 95% | [Description] |
-````
-
-Severity Levels:
-- 🔴 CRITICAL: Blocks core functionality, application unusable
-- 🟡 HIGH: Major visual issues, some functionality affected
-- 🟢 MEDIUM: Minor cosmetic issues, workarounds available
-- ⚪ LOW: Negligible impact
-
-Priority Levels:
-- P1: Test immediately, blocks deployment
-- P2: Test before deployment, may block
-- P3: Test if time permits, document only
-
-**3. Predicted Breakages**
+**1. Predicted Breakages**
 For each issue:
 ````markdown
 ### Issue #[N]: [Short Title]
@@ -116,7 +81,27 @@ For each issue:
 4. If broken: [what will happen instead]
 ````
 
-**4. Manual Test Plan**
+**2. Risk Assessment**
+````markdown
+## 📊 Risk Assessment
+
+| Issue | Severity | Priority | Confidence | Impact |
+|-------|----------|----------|------------|--------|
+| [Issue name] | 🔴 CRITICAL | P1 | 95% | [Description] |
+````
+
+Severity Levels:
+- 🔴 CRITICAL: Blocks core functionality, application unusable
+- 🟡 HIGH: Major visual issues, some functionality affected
+- 🟢 MEDIUM: Minor cosmetic issues, workarounds available
+- ⚪ LOW: Negligible impact
+
+Priority Levels:
+- P1: Test immediately, blocks deployment
+- P2: Test before deployment, may block
+- P3: Test if time permits, document only
+
+**3. Manual Test Plan**
 ````markdown
 ## 📋 Manual Test Plan
 
@@ -132,76 +117,52 @@ For each issue:
 - [ ] Step 2: [Action]
 - [ ] Expected: [Result]
 - [ ] If broken: [What to report]
-- [ ] Screenshot: Required/Optional
 - [ ] Stop condition: Yes/No
 ````
 
-**5. Time Estimates**
-````markdown
-## ⏱️ Time Estimates
+## What NOT to Include
 
-| Activity | Time | Resource |
-|----------|------|----------|
-| Critical tests | XX min | QA Lead |
-| High priority | XX min | QA Engineer |
-| Comprehensive | XX min | QA Engineer |
-| Bug reporting | XX min | QA Lead |
-| **Total** | **XX hours** | **QA Team** |
-````
+To keep reports focused and maintainable, **DO NOT** generate these sections:
 
-**6. Stop Conditions**
-````markdown
-## 🚨 Stop Conditions
+1. **❌ Visual Comparisons (ASCII Art)**  
+   - No "Expected:" vs "Broken:" ASCII diagrams in Predicted Breakages
+   - Markdown formatting doesn't render these well
+   - Screenshots are sufficient for visual comparison
 
-**STOP testing and report immediately if:**
-1. [Critical condition 1]
-2. [Critical condition 2]
+2. **❌ "Checklist:" Subsections**  
+   - Don't add "Checklist:" blocks within test sessions or Predicted Breakages
+   - Checkboxes `[ ]` are fine, but no separate "Checklist:" headers
 
-**Why stop:**
-- No point continuing
-- Critical blocker found
-- Report to dev immediately
-````
+3. **❌ Success Criteria Section**  
+   - Success criteria mentioned earlier is for skill design, not a report section
+   - Don't create a standalone "Success Criteria" section in reports
 
-**7. Bug Report Template**
-````markdown
-## 📝 Bug Report Template
+4. **❌ Next Steps After Testing Section**  
+   - Don't include generic post-testing workflow instructions
+   - QA teams have their own procedures
 
-If issues found, use:
+5. **❌ Contact & Escalation Section**  
+   - Don't add organizational contact information
+   - Teams manage their own escalation paths
 
-**Title:** [[Customer] CSS] [Short description]
+6. **❌ Test Execution Log Section**  
+   - Don't include sign-off forms or execution logs in the report
+   - QA tools handle test execution tracking
 
-**Severity:** CRITICAL/HIGH/MEDIUM/LOW  
-**Priority:** P1/P2/P3  
-**Environment:** [test/staging]
+**These sections add bulk without value and should be omitted.**
 
-**Steps to Reproduce:**
-1. [Step]
-2. [Step]
+## Optional Helpful Sections
 
-**Expected Result:**
-[What should happen]
+These sections MAY be included if they add clear value for the specific deployment:
 
-**Actual Result:**
-[What actually happens]
+1. **✅ Executive Summary** - Quick deploy/no-deploy recommendation (at top)
+2. **✅ Time Estimates** - Help QA plan testing sessions  
+3. **✅ Stop Conditions** - Clear criteria for when to stop testing and escalate
+4. **✅ Bug Report Template** - Pre-filled template for reporting issues found
+5. **✅ Evidence Collection** - Screenshot guidelines and naming conventions
+6. **✅ Reference Information** - Technical context, file paths, historical notes
 
-**Impact:**
-[User/business impact]
-
-**Screenshots:** [Attach]
-**Related:** [Link to test plan]
-````
-
-**8. Evidence Collection**
-````markdown
-## 📸 Evidence Collection
-
-**Required Screenshots:**
-- [ ] [Screenshot 1 description]
-- [ ] [Screenshot 2 description]
-
-**Naming:** `[customer]_[issue]_[page].png`
-````
+**Use judgment:** Include optional sections only if they save QA time or reduce ambiguity.
 
 ## Best Practices
 
@@ -214,12 +175,9 @@ If issues found, use:
 
 ### For QA-Friendly Output
 1. Use checkboxes `[ ]` for manual steps
-2. Include time estimates for planning
-3. Provide exact pages/URLs to test
-4. Include severity/priority for triage
-5. Use emojis for quick visual scanning
-6. Include stop conditions (when to halt)
-7. Provide ready-to-use bug templates
+2. Provide exact pages/URLs to test
+3. Include severity/priority for triage
+4. Use emojis for quick visual scanning
 
 ### For Risk Assessment
 **Confidence Levels:**
@@ -236,7 +194,7 @@ If issues found, use:
 - LOW: Minor cosmetic, can document and fix later
 
 ## Output Location
-Save report to: `qa_test_plan_[customer].md`
+Save report to: `risk reports/qa_test_report_[customer].md`
 
 ## Examples
 
@@ -250,7 +208,6 @@ Claude: [Reads this skill] → [Analyzes] → [Generates QA-focused report]
 - Generating developer-focused technical reports
 - Focusing on how to fix (that's for devs, not QA)
 - Omitting manual test steps (QA needs step-by-step)
-- No time estimates (QA needs to plan)
 
 ## Integration with Other Workflows
 - Combine with visual regression testing skill (if exists)
@@ -258,14 +215,14 @@ Claude: [Reads this skill] → [Analyzes] → [Generates QA-focused report]
 - Link to automated test results (if available)
 - Coordinate with deployment procedures
 
-## Success Criteria
-QA engineer should be able to:
+## Success Criteria (For Test Plan Design)
+**Note:** This defines what makes a good test plan. Do NOT include this as a section in generated reports.
+
+A successful test plan allows QA engineers to:
 1. Understand risk without technical knowledge
 2. Know exactly what to test
 3. Have step-by-step checklist ready
-4. Estimate testing time accurately
-5. Write bug reports quickly (templates provided)
-6. Make deploy/no-deploy decision confidently
+4. Make deploy/no-deploy decision confidently
 
 ## Maintenance Notes
 - Update when new common CSS patterns emerge
