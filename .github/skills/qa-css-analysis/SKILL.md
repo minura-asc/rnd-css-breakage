@@ -1,231 +1,199 @@
 ---
 name: qa-css-analysis
-description: Generate QA test plans for customer CSS deployments by analyzing conflicts between customer CSS and application styles. Predicts breakages before deployment and provides step-by-step manual testing checklists.
+description: Generate focused QA test plans (300 lines max) for customer CSS deployments
 ---
+
+## ⚠️ OUTPUT RULES - READ FIRST
+
+Generate EXACTLY these 3 sections in this order:
+1. **Predicted Breakages** (3-7 issues max)
+2. **Risk Assessment** (single table)
+3. **Manual Test Plan** (test sessions with checkboxes)
+
+**Total length: 300 lines maximum**
+
+All other sections are FORBIDDEN unless explicitly valuable for THIS deployment.
+
+---
+
 ## When to Use This Skill
 - User mentions: "QA test plan", "CSS conflicts", "analyze CSS for [customer]"
-- User asks: "what will break", "test plan for deployment"
 - Customer CSS deployment scenarios
 - Pre-deployment risk assessment
 
-## Workflow
+---
 
-### Input Requirements
-- Customer name (e.g., "customerA", "customerB")
+## Analysis Workflow
+
+### Step 1: Read Customer CSS
 - Location: `src/customers/[customer]/custom.css`
+- Flag: Global selectors, !important, element selectors
 
-### Analysis Steps
+### Step 2: Read Application Styles
+- Core: `src/app/@core/components/`
+- Theme: `src/app/@theme/`
+- Pages: `src/app/pages/`
 
-1. **Read Customer CSS Files**
-   - Location: `src/customers/[customer]/custom.css`
-   - Identify: Global selectors, !important flags, class names
-   - Flag: High-risk patterns (global `button`, element selectors)
+### Step 3: Detect Conflicts
+- Compare selectors
+- Check specificity + !important
+- Predict cascade issues
 
-2. **Read Application Styles**
-   - Core: `src/app/@core/components/`
-   - Theme: `src/app/@theme/`
-   - Pages: `src/app/pages/`
-   - Identify: Existing selectors that may conflict
+### Step 4: Check Git History
+- Search: "CSS", "style", "[customer name]"
+- Find patterns from past bugs
 
-3. **Conflict Detection**
-   - Compare customer CSS selectors with application selectors
-   - Check specificity battles
-   - Identify `!important` conflicts
-   - Predict cascade order issues
+### Step 5: Generate Report
+Follow exact format below.
 
-4. **Git History Analysis**
-   - Search commits for: "CSS", "style", "button", "[customer name]"
-   - Find past CSS bugs
-   - Identify patterns (e.g., buttons frequently break)
-   - Use historical data to improve predictions
+---
 
-5. **Generate QA Test Report**
+## REQUIRED OUTPUT FORMAT
 
-### Output Format
+**File:** `risk reports/qa_test_report_[customer].md`
 
-Generate: `qa_test_report_[customer].md`
-
-#### Required Sections:
-
-**1. Predicted Breakages**
-For each issue:
+**Structure (STRICT):**
 ````markdown
-### Issue #[N]: [Short Title]
+# QA Test Report - [Customer] CSS Deployment
+
+## 🔍 Predicted Breakages
+
+### Issue #1: [Short Title]
 **Severity:** 🔴 CRITICAL  
 **Priority:** P1  
-**Confidence:** [percentage]%
+**Confidence:** 95%
 
-**What Will Break:**
-- [Specific component/feature]
-- Expected: [Normal behavior]
-- After deployment: [Broken behavior]
+**What Breaks:**
+- Component: [name]
+- Expected: [normal behavior]
+- After deploy: [broken behavior]
 
 **Root Cause:**
 ```css
-/* Show the problematic CSS */
+/* problematic CSS */
 ```
 
 **Impact:**
-- User impact: [How users are affected]
-- Business impact: [Revenue, reputation, etc.]
+- User: [how affected]
+- Business: [consequences]
 
 **Where to Test:**
-- [Page 1]
-- [Page 2]
-- [Feature X]
+- Page 1
+- Page 2
 
 **Test Steps:**
 1. Navigate to [page]
-2. Check [specific element]
-3. Expected: [what should happen]
-4. If broken: [what will happen instead]
-````
+2. Check [element]
+3. Expected: [result]
+4. If broken: [what happens]
 
-**2. Risk Assessment**
-````markdown
+[Repeat for issues #2-7 max]
+
+---
+
 ## 📊 Risk Assessment
 
 | Issue | Severity | Priority | Confidence | Impact |
 |-------|----------|----------|------------|--------|
-| [Issue name] | 🔴 CRITICAL | P1 | 95% | [Description] |
-````
+| [Issue 1] | 🔴 CRITICAL | P1 | 95% | [desc] |
+| [Issue 2] | 🟡 HIGH | P2 | 90% | [desc] |
 
-Severity Levels:
-- 🔴 CRITICAL: Blocks core functionality, application unusable
-- 🟡 HIGH: Major visual issues, some functionality affected
-- 🟢 MEDIUM: Minor cosmetic issues, workarounds available
+**Severity Key:**
+- 🔴 CRITICAL: App unusable, blocks deployment
+- 🟡 HIGH: Major visual/functional issue
+- 🟢 MEDIUM: Minor issue, workarounds exist
 - ⚪ LOW: Negligible impact
 
-Priority Levels:
-- P1: Test immediately, blocks deployment
-- P2: Test before deployment, may block
-- P3: Test if time permits, document only
+---
 
-**3. Manual Test Plan**
-````markdown
 ## 📋 Manual Test Plan
 
 ### Test Session 1: Critical Issues (XX min)
 
 **Setup:**
 - Browser: Chrome (latest)
-- User: [test account]
-- Environment: [test/staging]
+- Environment: Test
 
 #### Test 1.1: [Test Name]
-- [ ] Step 1: [Action]
-- [ ] Step 2: [Action]
-- [ ] Expected: [Result]
-- [ ] If broken: [What to report]
+- [ ] Step 1: [action]
+- [ ] Step 2: [action]
+- [ ] Expected: [result]
+- [ ] If broken: [report what]
 - [ ] Stop condition: Yes/No
+
+[Repeat for sessions 2-3 max]
+
+---
+**END OF REPORT**
 ````
 
-## What NOT to Include
+---
 
-To keep reports focused and maintainable, **DO NOT** generate these sections:
+## Optional Sections (Use Sparingly)
 
-1. **❌ Visual Comparisons (ASCII Art)**  
-   - No "Expected:" vs "Broken:" ASCII diagrams in Predicted Breakages
-   - Markdown formatting doesn't render these well
-   - Screenshots are sufficient for visual comparison
+Include ONLY if critically valuable:
 
-2. **❌ "Checklist:" Subsections**  
-   - Don't add "Checklist:" blocks within test sessions or Predicted Breakages
-   - Checkboxes `[ ]` are fine, but no separate "Checklist:" headers
+- **Executive Summary** (2-3 lines) - Deploy yes/no at top
+- **Stop Conditions** - When to halt testing
+- **Time Estimates** - Per session only
 
-3. **❌ Success Criteria Section**  
-   - Success criteria mentioned earlier is for skill design, not a report section
-   - Don't create a standalone "Success Criteria" section in reports
+Do NOT add:
+- Screenshots checklists
+- Bug templates  
+- Historical context
+- Reference info
+- Success criteria
+- Contact info
+- Execution logs
+- ASCII diagrams
 
-4. **❌ Next Steps After Testing Section**  
-   - Don't include generic post-testing workflow instructions
-   - QA teams have their own procedures
+---
 
-5. **❌ Contact & Escalation Section**  
-   - Don't add organizational contact information
-   - Teams manage their own escalation paths
+## Severity Guidelines
 
-6. **❌ Test Execution Log Section**  
-   - Don't include sign-off forms or execution logs in the report
-   - QA tools handle test execution tracking
+**Confidence:**
+- 100%: Same selector + !important
+- 90-95%: Global selector
+- 80-90%: Similar selectors
+- 70-80%: Potential conflict
+- <70%: Low risk
 
-**These sections add bulk without value and should be omitted.**
+**Priority:**
+- P1: Blocks deployment
+- P2: Test before deploy
+- P3: Document only
 
-## Optional Helpful Sections
-
-These sections MAY be included if they add clear value for the specific deployment:
-
-1. **✅ Executive Summary** - Quick deploy/no-deploy recommendation (at top)
-2. **✅ Time Estimates** - Help QA plan testing sessions  
-3. **✅ Stop Conditions** - Clear criteria for when to stop testing and escalate
-4. **✅ Bug Report Template** - Pre-filled template for reporting issues found
-5. **✅ Evidence Collection** - Screenshot guidelines and naming conventions
-6. **✅ Reference Information** - Technical context, file paths, historical notes
-
-**Use judgment:** Include optional sections only if they save QA time or reduce ambiguity.
+---
 
 ## Best Practices
 
-### For Accurate Predictions
-1. Always check git history for patterns
-2. Focus on high-risk selectors: `button`, `input`, `div`, `a`
-3. Any `!important` flag is a red flag
-4. Global selectors (no class/ID) are dangerous
-5. Check CSS cascade order (customer CSS loaded last?)
+1. Check git history for patterns
+2. Focus on: `button`, `input`, `div`, element selectors
+3. Any `!important` = red flag
+4. Global selectors = dangerous
+5. Keep report under 300 lines
 
-### For QA-Friendly Output
-1. Use checkboxes `[ ]` for manual steps
-2. Provide exact pages/URLs to test
-3. Include severity/priority for triage
-4. Use emojis for quick visual scanning
+---
 
-### For Risk Assessment
-**Confidence Levels:**
-- 100%: Same selector with !important
-- 90-95%: Global selector, high specificity
-- 80-90%: Similar selectors, likely conflict
-- 70-80%: Potential conflict, needs testing
-- <70%: Low risk, spot check only
+## Output Checklist
 
-**Severity Guidelines:**
-- CRITICAL: Application unusable, deployment blocker
-- HIGH: Major features broken, urgent fix needed
-- MEDIUM: Visual issues, workarounds available
-- LOW: Minor cosmetic, can document and fix later
+Before saving, verify:
+- [ ] Only 3 main sections
+- [ ] 3-7 issues max
+- [ ] Under 300 lines
+- [ ] No forbidden sections
+- [ ] Saved to: `risk reports/qa_test_report_[customer].md`
 
-## Output Location
-Save report to: `risk reports/qa_test_report_[customer].md`
+---
 
-## Examples
-
-### Good Usage
+## Example Output Length
 ````
-User: "Analyze CSS for customerA deployment"
-Claude: [Reads this skill] → [Analyzes] → [Generates QA-focused report]
+# QA Test Report - CustomerB CSS
+## Predicted Breakages (7 issues × 20 lines = 140 lines)
+## Risk Assessment (table = 15 lines)
+## Manual Test Plan (3 sessions × 30 lines = 90 lines)
+---
+Total: ~250 lines ✅
 ````
 
-### Bad Usage (Don't Do)
-- Generating developer-focused technical reports
-- Focusing on how to fix (that's for devs, not QA)
-- Omitting manual test steps (QA needs step-by-step)
-
-## Integration with Other Workflows
-- Combine with visual regression testing skill (if exists)
-- Reference git history patterns
-- Link to automated test results (if available)
-- Coordinate with deployment procedures
-
-## Success Criteria (For Test Plan Design)
-**Note:** This defines what makes a good test plan. Do NOT include this as a section in generated reports.
-
-A successful test plan allows QA engineers to:
-1. Understand risk without technical knowledge
-2. Know exactly what to test
-3. Have step-by-step checklist ready
-4. Make deploy/no-deploy decision confidently
-
-## Maintenance Notes
-- Update when new common CSS patterns emerge
-- Add historical patterns from past incidents
-- Refine severity criteria based on feedback
-- Keep test checklists current with application structure
+---
