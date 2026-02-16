@@ -106,19 +106,32 @@
       gap: 8px;
 
       .avatar-wrapper {
-        position: relative;
         display: inline-flex;
+        align-items: center;
+
+        ::ng-deep nb-user .info-container {
+          padding-left: 0.5rem;
+        }
+
+        ::ng-deep nb-user .user-picture {
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 10px;
+            height: 10px;
+            background: #00d68f;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-sizing: border-box;
+          }
+        }
 
         .online-status {
-          position: absolute;
-          bottom: 2px;
-          right: 2px;
-          width: 10px;
-          height: 10px;
-          background: #00d68f;
-          border: 2px solid #ffffff;
-          border-radius: 50%;
-          box-sizing: border-box;
+          display: none;
         }
       }
 
