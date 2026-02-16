@@ -80,46 +80,7 @@ Same overly broad selector targets the `.role-badge` span, replacing brand-speci
 
 ---
 
-### Issue #3: Online Status Indicator Becomes Gray Block
-**Severity:** 🔴 CRITICAL  
-**Priority:** P1  
-**Confidence:** 100%
-
-**What Breaks:**
-- Component: Online Status Dot (Header navbar user avatar)
-- Expected: Tiny green dot (10x10px) at bottom-right of avatar
-- After deploy: Gray block (80x28px) overlapping or beside avatar
-
-**Root Cause:**
-```css
-nb-action span {
-  display: block !important;        /* Breaks absolute positioning */
-  background: #f0f0f0 !important;   /* Gray instead of green #00d68f */
-  padding: 8px 12px !important;     /* Was 0, now explodes size */
-  min-width: 80px !important;       /* 10px dot becomes 80px block */
-  border-radius: 4px !important;    /* Square-ish, was circle (50%) */
-}
-```
-The `.online-status` span is positioned absolutely within `.avatar-wrapper`, but customerB CSS forces it into a block layout with massive dimensions.
-
-**Impact:**
-- User: User presence status is unreadable, avatar looks broken
-- Business: Real-time status indicator unusable, confusing UX
-
-**Where to Test:**
-- Header navbar → User avatar
-- All pages (navbar is global)
-
-**Test Steps:**
-1. Navigate to Dashboard
-2. Locate user avatar in top-right navbar
-3. Check online status indicator
-4. Expected: Small green dot at bottom-right of avatar circle
-5. If broken: Gray block near or overlapping avatar
-
----
-
-### Issue #4: User Section Stacked Vertically (Avatar + Badge)
+### Issue #3: User Section Stacked Vertically (Avatar + Badge)
 **Severity:** 🔴 CRITICAL  
 **Priority:** P1  
 **Confidence:** 100%
@@ -155,7 +116,7 @@ CustomerB assumes `.user-action > div` is for their custom dropdown menu, but no
 
 ---
 
-### Issue #5: All Header Icons Oversized
+### Issue #4: All Header Icons Oversized
 **Severity:** 🟡 HIGH  
 **Priority:** P2  
 **Confidence:** 100%
@@ -190,7 +151,7 @@ CustomerB hardcodes icon size for their branding, but new navbar has varied icon
 
 ---
 
-### Issue #6: User Avatar Has Gray Background Box
+### Issue #5: User Avatar Has Gray Background Box
 **Severity:** 🟡 HIGH  
 **Priority:** P2  
 **Confidence:** 95%
@@ -232,7 +193,7 @@ CustomerB adds background and padding to nb-user for their employee directory, b
 
 ---
 
-### Issue #7: Navbar Actions May Wrap to Multiple Lines
+### Issue #6: Navbar Actions May Wrap to Multiple Lines
 **Severity:** 🟢 MEDIUM  
 **Priority:** P3  
 **Confidence:** 85%
