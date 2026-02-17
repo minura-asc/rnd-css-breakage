@@ -83,4 +83,4 @@ ng generate component my-component  # Creates ngx-my-component with .scss
 - **Nebular 10.0.0**: Primary UI framework (`nb-*` components)
 - **ng2-smart-table**: CRUD table operations
 - **ECharts + ngx-echarts**: Primary charting library
-- **RxJS 6.6.2**: Uses `rxjs-compat` for backward compatibility1
+- **RxJS 6.6.2**: Uses `rxjs-compat` for backward compatibility
