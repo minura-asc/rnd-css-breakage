@@ -55,9 +55,21 @@ ngOnDestroy() { this.alive = false; }
 ### Theme-Aware Components
 Use `NbThemeService.getJsTheme()` to configure components per-theme.
 
+### Module Import Guards
+CoreModule and ThemeModule use `throwIfAlreadyLoaded()` in their constructors to enforce single-import. Never import these modules in feature modules.
+
+### Adding New Pages
+Create module → add lazy route in `pages-routing.module.ts` → add menu item in `pages-menu.ts`.
+
 ## Customer CSS Overrides
 
-Customer-specific CSS files live in `src/customers/{customerName}/custom.css` and are linked in `src/index.html`. Be cautious: overly broad selectors (like `button { ... }`) can break core UI components.
+Customer-specific CSS files live in `src/customers/{customerName}/custom.css`. To switch customers, toggle which `<link>` is uncommented in `src/index.html`:
+- `customers/none/custom.css` — baseline (no overrides)
+- `customers/customerA/custom.css`
+- `customers/customerB/custom.css` — known to break navbar features
+- `customers/customerC/custom.css` — known to break dashboard status cards
+
+Be cautious: overly broad selectors (like `button { ... }`) can break core UI components.
 
 ## Schematics Defaults
 
