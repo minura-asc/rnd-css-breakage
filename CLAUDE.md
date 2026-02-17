@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Modified version of akveo/ngx-admin for Playwright UI automation practice. Angular 14 admin dashboard using Nebular 10.0.0 UI framework. All data is mocked (no real backend).
+Modified version of akveo/ngx-admin for Playwright UI automation practice. Angular 14 admin dashboard using Nebular 10.0.0 UI framework. All data is mocked (no real backend). The project is specifically used to study **CSS breakage** caused by customer-specific CSS overrides.
 
 ## Development Commands
 
@@ -12,7 +12,7 @@ Modified version of akveo/ngx-admin for Playwright UI automation practice. Angul
 npm start          # Start dev server (ng serve)
 ```
 
-No test commands are configured in package.json.
+No test or lint commands are configured in package.json.
 
 ## Architecture
 
@@ -31,7 +31,7 @@ Three-layer architecture with strict module isolation:
 
 ### pages/ (Feature Modules)
 - Lazy-loaded routes defined in `pages-routing.module.ts`
-- Dashboard, forms, modal-overlays, extra-components, charts, tables
+- Dashboard, forms, modal-overlays, extra-components, charts, tables, custom-components
 
 ## Key Patterns
 
@@ -57,7 +57,29 @@ Use `NbThemeService.getJsTheme()` to configure components per-theme.
 
 ## Customer CSS Overrides
 
-Customer-specific CSS files live in `src/customers/{customerName}/custom.css` and are linked in `src/index.html`. Be cautious: overly broad selectors (like `button { ... }`) can break core UI components.
+This is the core focus of the project. Customer-specific CSS files live in `src/customers/{customerName}/custom.css`.
+
+### Available customers
+- `none/` - Empty baseline (no overrides)
+- `customerA/` - CSS overrides for Customer A
+- `customerB/` - CSS overrides for Customer B (known to break navbar features)
+- `customerC/` - CSS overrides for Customer C (known to break dashboard status cards)
+
+### Switching customers
+In `src/index.html`, uncomment exactly ONE customer CSS `<link>` and comment out the rest. Only one customer CSS should be active at a time.
+
+### Common breakage patterns
+Overly broad selectors (like `button { ... }`) and `!important` declarations in customer CSS can break core Nebular UI components.
+
+## Project-Specific Directories
+
+- `risk reports/` - QA test reports and CSS conflict analysis per customer deployment
+- `scenarios live/` - Testing scenario documentation
+
+## Claude Code Skills
+
+- `/qa-css-analysis` - Generate focused QA test plans (max 300 lines) for customer CSS deployments. Output goes to `risk reports/qa_test_report_[customer].md`
+- `/css-bug` - Create CSS bug issues from analysis findings
 
 ## Schematics Defaults
 
